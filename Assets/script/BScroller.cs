@@ -1,25 +1,19 @@
 using UnityEngine;
 
-public class BeatScroller : MonoBehaviour
+public class BScroller : MonoBehaviour
 {
-    public float beatTempo;
+    public float beatTempo; // Ex: 126.4f
     public bool hasStarted;
 
     void Start()
     {
+        // Converte batidas por minuto em unidades por segundo
         beatTempo = beatTempo / 60f;
     }
 
     void Update()
     {
-        if (!hasStarted)
-        {
-            if (Input.anyKeyDown)
-            {
-                hasStarted = true;
-            }
-        }
-        else
+        if (hasStarted)
         {
             transform.position -= new Vector3(0f, beatTempo * Time.deltaTime, 0f);
         }

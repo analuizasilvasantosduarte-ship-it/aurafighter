@@ -1,28 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ButtonController : MonoBehaviour {
+public class ButtonController : MonoBehaviour
+{
     private SpriteRenderer theSR;
     public Sprite defaultImage;
     public Sprite pressedImage;
-    public KeyCode keyToPress; // Corrigido: KeyCode
-    
+    public KeyCode keyToPress;
+
     void Start()
     {
-        theSR = GetComponent<SpriteRenderer>(); // Corrigido: GetComponent
+        // Obtém o componente uma única vez [1]
+        theSR = GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(keyToPress))
+        // Altera para a imagem de pressionado [2]
+        if (Input.GetKeyDown(keyToPress))
         {
             theSR.sprite = pressedImage;
         }
-        
+
+        // Retorna para a imagem padrão ao soltar [2]
         if (Input.GetKeyUp(keyToPress))
         {
             theSR.sprite = defaultImage;
         }
     }
+
 }

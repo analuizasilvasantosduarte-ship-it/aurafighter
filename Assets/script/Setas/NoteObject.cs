@@ -1,41 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class NoteObject : MonoBehaviour
 {
     public bool canBePressed;
-    public KeyCode keyToPress; // Corrigido: KeyCode
-
-    void Start()
-    {
-
-    }
+    public KeyCode keyToPress;
+    public GameObject hitEffect, goodEffect, perfectEffect, missEffect;
 
     void Update()
     {
-        if (Input.GetKeyDown(keyToPress))
+        if (Input.GetKeyDown(keyToPress) && canBePressed)
         {
-            if (canBePressed)
+            float hitPrecision = Mathf.Abs(transform.position.y);
+
+            if (hitPrecision > 0.25f)
             {
-                gameObject.SetActive(false); // Corrigido: adicionado o ponto e vírgula ';'
+                GameManager.instance.NormalHit();
+                Instantiate(hitEffect, transform.position, hitEffect.transform.rotation);
             }
+            else if (hitPrecision > 0.05f)
+            {
+                GameManager.instance.GoodHit();
+                Instantiate(goodEffect, transform.position, goodEffect.transform.rotation);
+            }
+            else
+            {
+                GameManager.instance.PerfectHit();
+                Instantiate(perfectEffect, transform.position, perfectEffect.transform.rotation);
+            }
+            gameObject.SetActive(false);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Activator")) // Dica: CompareTag é mais eficiente que other.tag ==
-        {
-            canBePressed = true;
-        }
+        if (other.CompareTag("Activator")) canBePressed = true;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Activator"))
+        if (other.CompareTag("Activator") && gameObject.activeSelf)
         {
             canBePressed = false;
+            GameManager.instance.NoteMissed();
+            Instantiate(missEffect, transform.position, missEffect.transform.rotation);
         }
     }
 }
