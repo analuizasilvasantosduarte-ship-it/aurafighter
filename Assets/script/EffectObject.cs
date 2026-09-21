@@ -4,7 +4,7 @@ public class EffectObject : MonoBehaviour
 {
     public float lifetime = 1f;
 
-    void Update()
+    void Start()
     {
         Destroy(gameObject, lifetime);
     }

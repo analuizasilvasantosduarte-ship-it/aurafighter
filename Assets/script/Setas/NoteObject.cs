@@ -15,17 +15,17 @@ public class NoteObject : MonoBehaviour
             if (hitPrecision > 0.25f)
             {
                 GameManager.instance.NormalHit();
-                Instantiate(hitEffect, transform.position, hitEffect.transform.rotation);
+                if (hitEffect != null) Instantiate(hitEffect, transform.position, hitEffect.transform.rotation);
             }
             else if (hitPrecision > 0.05f)
             {
                 GameManager.instance.GoodHit();
-                Instantiate(goodEffect, transform.position, goodEffect.transform.rotation);
+                if (goodEffect != null) Instantiate(goodEffect, transform.position, goodEffect.transform.rotation);
             }
             else
             {
                 GameManager.instance.PerfectHit();
-                Instantiate(perfectEffect, transform.position, perfectEffect.transform.rotation);
+                if (perfectEffect != null) Instantiate(perfectEffect, transform.position, perfectEffect.transform.rotation);
             }
             gameObject.SetActive(false);
         }
@@ -42,7 +42,7 @@ public class NoteObject : MonoBehaviour
         {
             canBePressed = false;
             GameManager.instance.NoteMissed();
-            Instantiate(missEffect, transform.position, missEffect.transform.rotation);
+            if (missEffect != null) Instantiate(missEffect, transform.position, missEffect.transform.rotation);
         }
     }
 }
