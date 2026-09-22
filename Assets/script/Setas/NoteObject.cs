@@ -8,27 +8,47 @@ public class NoteObject : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(keyToPress) && canBePressed)
+        if (Input.GetKeyDown(keyToPress))
         {
-            float hitPrecision = Mathf.Abs(transform.position.y);
+            if (canBePressed)
+            {
+                float hitPrecision = Mathf.Abs(transform.position.y);
 
-            if (hitPrecision > 0.25f)
-            {
-                GameManager.instance.NormalHit();
-                if (hitEffect != null) Instantiate(hitEffect, transform.position, hitEffect.transform.rotation);
+                if (hitPrecision > 0.25f)
+                {
+                    GameManager.instance.NormalHit();
+                    if (hitEffect != null) Instantiate(hitEffect, transform.position, hitEffect.transform.rotation);
+                }
+                else if (hitPrecision > 0.05f)
+                {
+                    GameManager.instance.GoodHit();
+                    if (goodEffect != null) Instantiate(goodEffect, transform.position, goodEffect.transform.rotation);
+                }
+                else
+                {
+                    GameManager.instance.PerfectHit();
+                    if (perfectEffect != null) Instantiate(perfectEffect, transform.position, perfectEffect.transform.rotation);
+                }
+                gameObject.SetActive(false);
             }
-            else if (hitPrecision > 0.05f)
+            else if (!AnyNoteNearWithKey(keyToPress))
             {
-                GameManager.instance.GoodHit();
-                if (goodEffect != null) Instantiate(goodEffect, transform.position, goodEffect.transform.rotation);
+                GameManager.instance.WrongKeyPress();
             }
-            else
-            {
-                GameManager.instance.PerfectHit();
-                if (perfectEffect != null) Instantiate(perfectEffect, transform.position, perfectEffect.transform.rotation);
-            }
-            gameObject.SetActive(false);
         }
+    }
+
+    bool AnyNoteNearWithKey(KeyCode key)
+    {
+        NoteObject[] notes = FindObjectsOfType<NoteObject>();
+        for (int i = 0; i < notes.Length; i++)
+        {
+            if (notes[i] != this && notes[i].keyToPress == key && notes[i].canBePressed)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

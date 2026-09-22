@@ -34,12 +34,22 @@ public class GameManager : MonoBehaviour
     public bool forceDefeat;
     public string nextSceneName;
 
+    public event System.Action OnNoteHit;
+    public event System.Action OnNoteMissed;
+
     private bool resultAdvanceReady;
     private float resultShownTime;
 
-    void Start()
+    private KeyCode lastWrongKey;
+    private int lastWrongFrame;
+
+    void Awake()
     {
         instance = this;
+    }
+
+    void Start()
+    {
         if (scoreText != null) scoreText.text = "Score: 0";
         currentMultiplier = 1;
 
@@ -160,6 +170,7 @@ public class GameManager : MonoBehaviour
         currentScore += scorePerNote * currentMultiplier;
         NoteHit();
         normalHits++;
+        if (OnNoteHit != null) OnNoteHit();
     }
 
     public void GoodHit()
@@ -167,6 +178,7 @@ public class GameManager : MonoBehaviour
         currentScore += scorePerGoodNote * currentMultiplier;
         NoteHit();
         goodHits++;
+        if (OnNoteHit != null) OnNoteHit();
     }
 
     public void PerfectHit()
@@ -174,6 +186,7 @@ public class GameManager : MonoBehaviour
         currentScore += scorePerPerfectNote * currentMultiplier;
         NoteHit();
         perfectHits++;
+        if (OnNoteHit != null) OnNoteHit();
     }
 
     public void NoteMissed()
@@ -182,8 +195,18 @@ public class GameManager : MonoBehaviour
         multiplierTracker = 0;
         if (multiText != null) multiText.text = "Multiplier: x" + currentMultiplier;
         missedHits++;
+        if (OnNoteMissed != null) OnNoteMissed();
 
         if (Vida.instance != null) Vida.instance.TakeDamage(Vida.instance.damagePerMiss);
+    }
+
+    public void WrongKeyPress()
+    {
+        if (lastWrongFrame == Time.frameCount) return;
+        lastWrongFrame = Time.frameCount;
+
+        if (Vida.instance != null) Vida.instance.TakeDamage(Vida.instance.damagePerMiss);
+        if (OnNoteMissed != null) OnNoteMissed();
     }
 
     GameObject CreateOverlayCanvas(string name)

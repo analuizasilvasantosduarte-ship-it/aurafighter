@@ -6,14 +6,16 @@ TagManager:
   tags:
   - Activator
   - Setas
+  - Background
+  - "bot\xF5es"
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Background
   - Water
   - UI
-  - 
+  - "bot\xF5es"
   - 
   - 
   - 
