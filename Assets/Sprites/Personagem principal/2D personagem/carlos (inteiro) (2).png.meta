@@ -139,13 +139,13 @@ TextureImporter:
       name: carlos (inteiro) (2)_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 419
         y: 0
-        width: 960
+        width: 402
         height: 1080
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 5, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -160,12 +160,12 @@ TextureImporter:
       name: carlos (inteiro) (2)_1
       rect:
         serializedVersion: 2
-        x: 960
+        x: 1064
         y: 0
-        width: 960
+        width: 377
         height: 1080
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5394792, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

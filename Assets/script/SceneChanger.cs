@@ -42,6 +42,8 @@ public class SceneChanger : MonoBehaviour
     public void NovoJogo()
     {
         SaveSystem.ApagarSave();
+        AuraBank.Reset();
+        AuraBank.Reload();
         if (Aura.instance != null) Aura.instance.ResetAura();
         if (Vida.instance != null) Vida.instance.ResetVida();
         Carregar();

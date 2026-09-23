@@ -1,0 +1,76 @@
+{
+  "Cor": {
+    "$description": "Aura Fighter — Design System v1.0",
+    "Nucleo": {
+      "AuraGold":     { "$type": "color", "$value": "#FFD200" },
+      "AuraGoldText": { "$type": "color", "$value": "#FFD933" },
+      "AuraViolet":   { "$type": "color", "$value": "#4F119A" },
+      "AuraDeepPurple": { "$type": "color", "$value": "#2C004B" },
+      "AuraEmber":    { "$type": "color", "$value": "#D93A22" },
+      "AuraEmberDark":{ "$type": "color", "$value": "#B6240E" },
+      "AuraLavender": { "$type": "color", "$value": "#E0C7FF" }
+    },
+    "Semantico": {
+      "Success":     { "$type": "color", "$value": "#18BE03" },
+      "Good":        { "$type": "color", "$value": "#F1E603" },
+      "Neutral":     { "$type": "color", "$value": "#035AD9" },
+      "Danger":      { "$type": "color", "$value": "#E60101" },
+      "ButtonRed":   { "$type": "color", "$value": "#FF0000" },
+      "ButtonBlue":  { "$type": "color", "$value": "#003CFF" },
+      "ButtonGreen": { "$type": "color", "$value": "#0E9000" },
+      "Defeat":      { "$type": "color", "$value": "#FF3333" }
+    },
+    "Neutro": {
+      "Black":        { "$type": "color", "$value": "#000000" },
+      "BlackBlue":    { "$type": "color", "$value": "#0F0F1F" },
+      "Charcoal":     { "$type": "color", "$value": "#2C2C2C" },
+      "CharcoalLight":{ "$type": "color", "$value": "#3D3D3D" },
+      "Gray":         { "$type": "color", "$value": "#555555" },
+      "GrayLight":    { "$type": "color", "$value": "#909090" },
+      "GrayLighter":  { "$type": "color", "$value": "#E0E0E0" },
+      "White":        { "$type": "color", "$value": "#FFFFFF" },
+      "Overlay":      { "$type": "color", "$value": "#000000D9" }
+    },
+    "Pistas": {
+      "Lane1": { "$type": "color", "$value": "#003CFF" },
+      "Lane2": { "$type": "color", "$value": "#FFD200" },
+      "Lane3": { "$type": "color", "$value": "#FF0000" },
+      "Lane4": { "$type": "color", "$value": "#0E9000" }
+    },
+    "Ranks": {
+      "S": { "$type": "color", "$value": "#FFD200" },
+      "A": { "$type": "color", "$value": "#18BE03" },
+      "B": { "$type": "color", "$value": "#003CFF" },
+      "C": { "$type": "color", "$value": "#F1E603" },
+      "D": { "$type": "color", "$value": "#909090" },
+      "F": { "$type": "color", "$value": "#E60101" }
+    }
+  },
+  "Tipografia": {
+    "$description": "Fonte principal: Thaleah Fat (pixel). Fallback: LegacyRuntime/Arial nas UIs via codigo.",
+    "Display XL": { "$type": "fontFamily", "$value": "Thaleah Fat" },
+    "Escala": {
+      "DisplayXL":  { "$type": "fontSizes", "$value": "96" },
+      "DisplayL":   { "$type": "fontSizes", "$value": "64" },
+      "H1":         { "$type": "fontSizes", "$value": "48" },
+      "H2":         { "$type": "fontSizes", "$value": "36" },
+      "BodyL":      { "$type": "fontSizes", "$value": "34" },
+      "BodyM":      { "$type": "fontSizes", "$value": "28" },
+      "Label":      { "$type": "fontSizes", "$value": "24" }
+    }
+  },
+  "Espacamento": {
+    "$description": "Base 4px",
+    "S1":  { "$type": "spacing", "$value": "4" },
+    "S2":  { "$type": "spacing", "$value": "8" },
+    "S3":  { "$type": "spacing", "$value": "12" },
+    "S4":  { "$type": "spacing", "$value": "16" },
+    "S5":  { "$type": "spacing", "$value": "20" },
+    "S6":  { "$type": "spacing", "$value": "24" },
+    "S8":  { "$type": "spacing", "$value": "32" },
+    "S12": { "$type": "spacing", "$value": "48" },
+    "S14": { "$type": "spacing", "$value": "80" },
+    "S16": { "$type": "spacing", "$value": "64" },
+    "S20": { "$type": "spacing", "$value": "120" }
+  }
+}
