@@ -14,20 +14,24 @@ public class DialogueSystem : MonoBehaviour
         public string text;
         public Sprite image;
         public Sprite textBoxSprite;
+        public bool mostrarCartaz;
     }
 
     public List<DialogueLine> lines = new List<DialogueLine>();
     public string nextSceneName;
     public float letterDelay = 0.03f;
     public Sprite background;
+    public Sprite cartaz;
     public Sprite defaultTextBoxSprite;
     public bool startOnAwake = true;
 
     private Image sceneImage;
+    private Image posterImage;
     private Image panelImage;
     private Text speakerText;
     private Text messageText;
     private Text continueText;
+    private Text posterHint;
 
     private int currentLineIndex;
     private Coroutine typingRoutine;
@@ -93,43 +97,64 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
-    void ShowLine(int index)
+void ShowLine(int index)
+{
+    canAdvance = false;
+    if (continueText != null) continueText.gameObject.SetActive(false);
+    if (posterHint != null) posterHint.gameObject.SetActive(false);
+
+    DialogueLine line = lines[index];
+    bool poster = line.mostrarCartaz && cartaz != null;
+
+    if (posterImage != null)
     {
-        canAdvance = false;
-        if (continueText != null) continueText.gameObject.SetActive(false);
+        posterImage.gameObject.SetActive(poster);
+        if (poster) posterImage.sprite = cartaz;
+    }
 
-        DialogueLine line = lines[index];
-
-        if (speakerText != null)
+    if (sceneImage != null)
+    {
+        if (poster)
         {
-            speakerText.text = string.IsNullOrEmpty(line.speaker) ? "" : line.speaker;
-            speakerText.gameObject.SetActive(speakerText.text.Trim().Length > 0);
+            sceneImage.gameObject.SetActive(false);
         }
-
-        if (sceneImage != null)
+        else if (line.image != null)
         {
-            if (line.image != null)
-            {
-                sceneImage.sprite = line.image;
-                sceneImage.gameObject.SetActive(true);
-            }
-            else
-            {
-                sceneImage.gameObject.SetActive(false);
-            }
+            sceneImage.sprite = line.image;
+            sceneImage.gameObject.SetActive(true);
         }
-
-        if (panelImage != null)
+        else
         {
-            ApplyTextBoxSprite(panelImage, line.textBoxSprite != null ? line.textBoxSprite : defaultTextBoxSprite);
+            sceneImage.gameObject.SetActive(false);
         }
+    }
 
-        if (messageText != null)
+    if (panelImage != null)
+    {
+        panelImage.gameObject.SetActive(!poster);
+        if (!poster) ApplyTextBoxSprite(panelImage, line.textBoxSprite != null ? line.textBoxSprite : defaultTextBoxSprite);
+    }
+
+    if (speakerText != null && !poster)
+    {
+        speakerText.text = string.IsNullOrEmpty(line.speaker) ? "" : line.speaker;
+        speakerText.gameObject.SetActive(speakerText.text.Trim().Length > 0);
+    }
+
+    if (messageText != null)
+    {
+        messageText.text = "";
+        if (poster)
         {
-            messageText.text = "";
+            canAdvance = true;
+            if (posterHint != null) posterHint.gameObject.SetActive(true);
+        }
+        else
+        {
             typingRoutine = StartCoroutine(TypeLine(line.text));
         }
     }
+}
 
     IEnumerator TypeLine(string fullText)
     {
@@ -175,17 +200,32 @@ public class DialogueSystem : MonoBehaviour
 
         sceneImage = CreateImage("SceneImage", canvasGO.transform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero, Vector2.zero);
         sceneImage.raycastTarget = false;
+        sceneImage.preserveAspect = true;
         sceneImage.gameObject.SetActive(false);
+
+        posterImage = CreateImage("PosterImage", canvasGO.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0, 40), new Vector2(900, 760));
+        posterImage.raycastTarget = false;
+        posterImage.preserveAspect = true;
+        posterImage.gameObject.SetActive(false);
+
+        posterHint = CreateText("PosterHint", canvasGO.transform, new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0, 235), new Vector2(600, 30), DesignTokens.Type.Label, TextAnchor.LowerCenter, FontStyle.Italic);
+        posterHint.text = "Pressione Espaço ▼";
+        posterHint.color = DesignTokens.Colors.DialogueText;
+        posterHint.gameObject.SetActive(false);
 
         Image panel = CreateImage("DialoguePanel", canvasGO.transform, new Vector2(0, 0), new Vector2(1, 0), new Vector2(0.5f, 0), new Vector2(0, 170), new Vector2(-80, 330));
         panel.raycastTarget = false;
         panelImage = panel;
         ApplyTextBoxSprite(panel, defaultTextBoxSprite);
+        Outline panelOutline = panel.gameObject.AddComponent<Outline>();
+        panelOutline.effectColor = DesignTokens.Colors.DialogueBoxBorder;
+        panelOutline.effectDistance = new Vector2(4f, -4f);
 
-        speakerText = CreateText("Speaker", panel.transform, new Vector2(0, 1), new Vector2(1, 1), new Vector2(0, 1), new Vector2(0, -12), new Vector2(-40, 40), 28, TextAnchor.UpperLeft, FontStyle.Bold);
-        speakerText.color = new Color(1f, 0.85f, 0.2f, 1f);
+        speakerText = CreateText("Speaker", panel.transform, new Vector2(0, 1), new Vector2(1, 1), new Vector2(0, 1), new Vector2(0, -12), new Vector2(-40, 40), DesignTokens.Type.BodyM, TextAnchor.UpperLeft, FontStyle.Bold);
+        speakerText.color = DesignTokens.Colors.DialogueText;
 
-        messageText = CreateText("Message", panel.transform, new Vector2(0, 0), new Vector2(1, 1), new Vector2(0.5f, 0.5f), new Vector2(0, -15), new Vector2(-120, -75), 34, TextAnchor.UpperLeft, FontStyle.Normal);
+        messageText = CreateText("Message", panel.transform, new Vector2(0, 0), new Vector2(1, 1), new Vector2(0.5f, 0.5f), new Vector2(0, -15), new Vector2(-120, -75), DesignTokens.Type.BodyL, TextAnchor.UpperLeft, FontStyle.Normal);
+        messageText.color = DesignTokens.Colors.DialogueText;
 
         continueText = CreateText("Continue", panel.transform, new Vector2(1, 0), new Vector2(1, 0), new Vector2(1, 0), new Vector2(-45, 12), new Vector2(200, 30), 24, TextAnchor.LowerRight, FontStyle.Italic);
         continueText.text = "Pressione Espaço ▼";
@@ -198,15 +238,22 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
-    IEnumerator BlinkContinue()
-    {
+IEnumerator BlinkContinue()
+{
         while (true)
         {
-            if (continueText != null && canAdvance)
+            bool hintBox = continueText != null && continueText.gameObject.activeSelf;
+            bool hintPoster = posterHint != null && posterHint.gameObject.activeSelf;
+
+            if (hintBox || hintPoster)
             {
-                continueText.color = new Color(1, 1, 1, 0.9f);
+                Color on = new Color(1, 1, 1, 0.9f);
+                Color off = new Color(1, 1, 1, 0.25f);
+                if (hintBox) continueText.color = on;
+                if (hintPoster) posterHint.color = on;
                 yield return new WaitForSeconds(0.45f);
-                continueText.color = new Color(1, 1, 1, 0.25f);
+                if (hintBox) continueText.color = off;
+                if (hintPoster) posterHint.color = off;
                 yield return new WaitForSeconds(0.45f);
             }
             else
@@ -267,7 +314,7 @@ public class DialogueSystem : MonoBehaviour
         else
         {
             panel.sprite = null;
-            panel.color = new Color(0, 0, 0, 0.82f);
+            panel.color = DesignTokens.Colors.DialogueBoxBg;
             panel.type = Image.Type.Simple;
             panel.preserveAspect = false;
         }

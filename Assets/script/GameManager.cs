@@ -83,6 +83,12 @@ public class GameManager : MonoBehaviour
     public float emptyScreenTimeout = 3f;
     [Tooltip("Cena ao sair da derrota (padrão: Tela de level).")]
     public string defeatReturnScene = "Tela de level";
+    [Tooltip("Se preenchido: a derrota NÃO oferece tentar de novo nem voltar às fases; segue direto para esta cena (ex: CutsceneTreinadorFase2).")]
+    public string defeatNextScene = "";
+    [Tooltip("Prompt mostrado na derrota quando defeatNextScene está definido (vazio = sem prompt).")]
+    public string defeatAdvancePrompt = "";
+    [Tooltip("Espera antes de ir para defeatNextScene.")]
+    public float defeatAdvanceDelay = 1.5f;
     [Tooltip("Espera após a última seta antes de mostrar o resultado.")]
     public float resultDelay = 1f;
 
@@ -248,11 +254,14 @@ public class GameManager : MonoBehaviour
                 if (defeated)
                 {
                     // Derrota: Espaço/R tenta de novo, Esc volta à seleção de fases.
-                    if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(retryKey))
-                        UnityEngine.SceneManagement.SceneManager.LoadScene(
-                            UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
-                    else if (Input.GetKeyDown(pauseKey) && !string.IsNullOrEmpty(defeatReturnScene))
-                        UnityEngine.SceneManagement.SceneManager.LoadScene(defeatReturnScene);
+                    if (string.IsNullOrEmpty(defeatNextScene))
+                    {
+                        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(retryKey))
+                            UnityEngine.SceneManagement.SceneManager.LoadScene(
+                                UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+                        else if (Input.GetKeyDown(pauseKey) && !string.IsNullOrEmpty(defeatReturnScene))
+                            UnityEngine.SceneManagement.SceneManager.LoadScene(defeatReturnScene);
+                    }
                 }
                 else if (pendingInSceneResults && Input.anyKeyDown)
                 {
@@ -373,6 +382,18 @@ public class GameManager : MonoBehaviour
         if (resultsScreen != null) resultsScreen.SetActive(false);
         BuildDefeatUI();
         resultAdvanceReady = true;
+
+        if (!string.IsNullOrEmpty(defeatNextScene))
+            Invoke("IrParaCenaDerrota", Mathf.Max(0f, defeatAdvanceDelay));
+    }
+
+    void IrParaCenaDerrota()
+    {
+        if (!string.IsNullOrEmpty(defeatNextScene)
+            && Application.CanStreamedLevelBeLoaded(defeatNextScene))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(defeatNextScene);
+        }
     }
 
     public void NoteHit()
@@ -602,7 +623,7 @@ public class GameManager : MonoBehaviour
         score.text = "Pontuação: " + currentScore;
 
         Text prompt = CreateDefeatText("Prompt", canvasGO.transform, new Vector2(0, -250), 28, TextAnchor.MiddleCenter, FontStyle.Italic, Color.white);
-        prompt.text = defeatPrompt;
+        prompt.text = string.IsNullOrEmpty(defeatNextScene) ? defeatPrompt : defeatAdvancePrompt;
     }
 
     void BuildContinuePrompt()

@@ -85,6 +85,7 @@ LightmapSettings:
     m_PVRFilterTypeDirect: 0
     m_PVRFilterTypeIndirect: 0
     m_PVRFilterTypeAO: 0
+    m_PVREnvironmentMIS: 1
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
@@ -129,10 +130,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+  - component: {fileID: 1004}
   - component: {fileID: 1001}
   - component: {fileID: 1002}
   - component: {fileID: 1003}
-  - component: {fileID: 1004}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -304,13 +305,111 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lines:
   - speaker: Tung Tung Tung Sahur
-    text: "Olá, Carlos! Eu sou o Tung Tung Tung Sahur, seu treinador. Vou te ensinar as batalhas de ritmo. Vamos começar!"
-    image: {fileID: 21300000, guid: 52a46456f91afde459849363113adbd1, type: 3}
-    textBoxSprite: {fileID: 21300000, guid: 52a46456f91afde459849363113adbd1, type: 3}
+    text: "Ol\xE1, Carlos! Eu sou o Tung Tung Tung Sahur, seu treinador. Vou te ensinar
+      as batalhas de ritmo. Vamos come\xE7ar!"
+    image: {fileID: 21300000, guid: 6553779ba97405e488fab6c2fdf86f8a, type: 3}
+    textBoxSprite: {fileID: 0}
+    mostrarCartaz: 0
   - speaker: Carlos
-    text: "Entendido, mestre! Quando as setas acabarem, estarei pronto para o duelo com o Red Bird."
-    image: {fileID: 21300000, guid: db1ed0800c053e5468f72bc2636dec66, type: 3}
+    text: Entendido, mestre! Quando as setas acabarem, estarei pronto para o duelo
+      com o Red Bird.
+    image: {fileID: -31093832, guid: 268d4f91ad8f53444886dd93b5259d6f, type: 3}
+    textBoxSprite: {fileID: 0}
+    mostrarCartaz: 0
   nextSceneName: Tutorial
   letterDelay: 0.03
-  background: {fileID: 0}
-  defaultTextBoxSprite: {fileID: 21300000, guid: db1ed0800c053e5468f72bc2636dec66, type: 3}
+  background: {fileID: 21300000, guid: 8697162eed9d96345a2d2708bf156fe3, type: 3}
+  cartaz: {fileID: 0}
+  defaultTextBoxSprite: {fileID: 0}
+  startOnAwake: 1
+--- !u!1 &373698422
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 373698424}
+  - component: {fileID: 373698423}
+  m_Layer: 0
+  m_Name: 12
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!212 &373698423
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373698422}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 8697162eed9d96345a2d2708bf156fe3, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 19.2, y: 10.8}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &373698424
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373698422}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.2084, y: 0.048018664, z: 0}
+  m_LocalScale: {x: 1.1607, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1660057539 &9223372036854775807
+SceneRoots:
+  m_ObjectHideFlags: 0
+  m_Roots:
+  - {fileID: 1004}
+  - {fileID: 2001}
+  - {fileID: 373698424}

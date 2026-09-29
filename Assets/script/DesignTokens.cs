@@ -58,6 +58,14 @@ public static class DesignTokens
         /// <summary>Dimmer da tela de derrota (rgba(0,0,0,0.85)).</summary>
         public static readonly Color Overlay = new Color(0f, 0f, 0f, 0.85f);
 
+        // ---- Diálogo (cutscenes) ----
+        /// <summary>Fundo da caixa de diálogo: vermelho escuro quase preto.</summary>
+        public static readonly Color DialogueBoxBg     = GetColor("1A0508E0");
+        /// <summary>Contorno da caixa de diálogo (ember, destaca no fundo).</summary>
+        public static readonly Color DialogueBoxBorder = GetColor("D93A22");
+        /// <summary>Texto do diálogo (branco).</summary>
+        public static readonly Color DialogueText      = GetColor("FFFFFF");
+
         // ---- Pistas do ritmo (seção 2.4) ----
         public static readonly Color Lane1           = GetColor("003CFF"); // azul
         public static readonly Color Lane2           = GetColor("FFD200"); // amarela

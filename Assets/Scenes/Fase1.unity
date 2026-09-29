@@ -203,6 +203,9 @@ MonoBehaviour:
   resultSceneDelay: 1.2
   emptyScreenTimeout: 3
   defeatReturnScene: Tela de level
+  defeatNextScene: CutsceneTreinadorTutorial
+  defeatAdvancePrompt: 
+  defeatAdvanceDelay: 1.5
   resultDelay: 1
   pauseKey: 27
   retryKey: 114
@@ -813,7 +816,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   beatTempo: 126.4
   hasStarted: 0
-  unitsPerSecond: 0
+  unitsPerSecond: 20
   conductor: {fileID: 0}
   autoStartOnKey: 1
 --- !u!4 &226396080

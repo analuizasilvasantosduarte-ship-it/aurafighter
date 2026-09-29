@@ -1818,7 +1818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f6e5d4c3b2a1918070605f4e3d2c1b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: Tutorial
+  sceneName: CutsceneTreinadorTutorial
   requiredPoints: 0
   previousPhase: 
 --- !u!1 &1904622766
