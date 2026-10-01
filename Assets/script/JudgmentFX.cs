@@ -26,6 +26,7 @@ public class JudgmentFX : MonoBehaviour
         public float life;
         public float maxLife = 0.6f;
         public Vector2 startPos;
+        public bool popIn;
     }
 
     private class Spark
@@ -74,6 +75,16 @@ public class JudgmentFX : MonoBehaviour
         fx.Burst(fx.WorldToAnchored(worldPos), color, count);
     }
 
+    /// <summary>Aviso grande no centro da tela (ex: "ÚLTIMAS SETAS!").</summary>
+    public static void Aviso(string mensagem, Color color, float duracao = 2.5f)
+    {
+        JudgmentFX fx = GetOrCreate();
+        Vector2 pos = new Vector2(0f, 300f);
+        Popup p = fx.SpawnPopup(mensagem, color, pos, Mathf.RoundToInt(fx.popupSize * 1.6f), duracao);
+        if (p != null) p.popIn = false;
+        fx.Burst(pos, color, 18);
+    }
+
     void BuildCanvas()
     {
         GameObject canvasGO = new GameObject("JudgmentCanvas", typeof(RectTransform));
@@ -106,23 +117,30 @@ public class JudgmentFX : MonoBehaviour
 
     void SpawnPopup(string label, Color color, Vector2 anchored)
     {
+        SpawnPopup(label, color, anchored, popupSize, 0.6f);
+    }
+
+    Popup SpawnPopup(string label, Color color, Vector2 anchored, int fontSize, float life)
+    {
         Transform parent = transform.Find("JudgmentCanvas");
         GameObject go = new GameObject("Popup", typeof(RectTransform));
         go.transform.SetParent(parent, false);
         RectTransform rt = go.GetComponent<RectTransform>();
         rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(0.5f, 0.5f);
         rt.anchoredPosition = anchored;
-        rt.sizeDelta = new Vector2(600, 120);
-        rt.localScale = Vector3.one * 1.6f;
+        rt.sizeDelta = new Vector2(900, 120);
+        rt.localScale = Vector3.one;
         Text t = go.AddComponent<Text>();
         t.font = popupFont != null ? popupFont : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-        t.fontSize = popupSize;
+        t.fontSize = fontSize;
         t.alignment = TextAnchor.MiddleCenter;
         t.fontStyle = FontStyle.Bold;
         t.color = color;
         t.raycastTarget = false;
         t.text = label;
-        popups.Add(new Popup { go = go, rt = rt, text = t, life = 0.6f, startPos = anchored });
+        var popup = new Popup { go = go, rt = rt, text = t, life = life, maxLife = life, startPos = anchored, popIn = true };
+        popups.Add(popup);
+        return popup;
     }
 
     void Burst(Vector2 anchored, Color color, int count)
@@ -181,10 +199,10 @@ public class JudgmentFX : MonoBehaviour
             }
             float f = p.life / p.maxLife;
             p.rt.anchoredPosition = p.startPos + new Vector2(0f, (1f - f) * 120f);
-            float s = 1f + 0.6f * f;
+            float s = p.popIn ? 1f + 0.6f * f : 1f;
             p.rt.localScale = new Vector3(s, s, 1f);
             Color c = p.text.color;
-            c.a = Mathf.Clamp01(f * 1.5f);
+            c.a = Mathf.Clamp01(f / 0.3f);
             p.text.color = c;
         }
         for (int i = sparks.Count - 1; i >= 0; i--)

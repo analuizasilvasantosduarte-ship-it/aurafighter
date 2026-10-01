@@ -203,7 +203,18 @@ MonoBehaviour:
   resultSceneDelay: 1.2
   emptyScreenTimeout: 3
   defeatReturnScene: Tela de level
+  defeatNextScene: 
+  defeatAdvancePrompt: 
+  defeatAdvanceDelay: 1.5
   resultDelay: 1
+  rageSaraivada: 1
+  cenasDoRage:
+  - Fase1
+  setasNoRage: 7
+  multiplicadorVelocidadeRage: 3.5
+  multiplicadorDanoRage: 2
+  avisarRage: 1
+  textoAvisoRage: "\xDALTIMAS SETAS!"
   pauseKey: 27
   retryKey: 114
   muteKey: 109
@@ -878,7 +889,7 @@ Transform:
   m_GameObject: {fileID: 171142282}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.78, y: 2.81, z: 0}
+  m_LocalPosition: {x: -7.51, y: 2.71, z: 0}
   m_LocalScale: {x: 0.5921, y: 0.5921, z: 0.5921}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -914,7 +925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04cc3a1ce070b6849b70f216b7a50a39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beatTempo: 126.4
+  beatTempo: 142
   hasStarted: 0
   unitsPerSecond: 0
   conductor: {fileID: 0}
@@ -1717,7 +1728,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e3903f052f6e1c84385cd598b244e788, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 8ba371ab4afe4c8aa257fa4ab1e1fc37, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -2474,8 +2485,8 @@ Transform:
   m_GameObject: {fileID: 1075768975}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.91, y: 2.06, z: 0}
-  m_LocalScale: {x: 0.34969914, y: 0.3231205, z: 0.6766701}
+  m_LocalPosition: {x: 7.01, y: 1.79, z: 0}
+  m_LocalScale: {x: 0.2985032, y: 0.29206863, z: 0.6766701}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -4363,7 +4374,7 @@ GameObject:
   - component: {fileID: 2040251991}
   - component: {fileID: 2040251990}
   m_Layer: 0
-  m_Name: GamesPlusJames - Rhythm Tutorial
+  m_Name: Fermo Aura (DUPE)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4379,7 +4390,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e3903f052f6e1c84385cd598b244e788, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 8ba371ab4afe4c8aa257fa4ab1e1fc37, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

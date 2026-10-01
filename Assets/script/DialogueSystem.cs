@@ -15,6 +15,13 @@ public class DialogueSystem : MonoBehaviour
         public Sprite image;
         public Sprite textBoxSprite;
         public bool mostrarCartaz;
+
+        [Tooltip("Mostra a imagem escolhida ocupando a tela inteira (tem prioridade sobre o cartaz).")]
+        public bool mostrarTelaCheia;
+        [Tooltip("Imagem de tela inteira desta linha. Vazio = usa a imagem padrão do DialogueSystem.")]
+        public Sprite imagemTelaCheia;
+        [Tooltip("Se ligado, a caixa de diálogo aparece por cima da imagem de tela cheia. Desligado = só a imagem, e Espaço avança.")]
+        public bool textoSobreImagem;
     }
 
     public List<DialogueLine> lines = new List<DialogueLine>();
@@ -23,10 +30,17 @@ public class DialogueSystem : MonoBehaviour
     public Sprite background;
     public Sprite cartaz;
     public Sprite defaultTextBoxSprite;
+
+    [Header("Imagem de tela cheia")]
+    [Tooltip("Imagem de tela cheia usada quando a linha marca 'Mostrar imagem de tela cheia' mas não tem imagem própria. Ex: um desenho seu.")]
+    public Sprite imagemTelaCheiaPadrao;
+    [Tooltip("Desligado (padrão): a imagem fica centralizada mantendo a proporção, sem esticar. Ligado: a imagem é esticada até preencher a tela toda.")]
+    public bool telaCheiaEsticar;
     public bool startOnAwake = true;
 
     private Image sceneImage;
     private Image posterImage;
+    private Image fullscreenImage;
     private Image panelImage;
     private Text speakerText;
     private Text messageText;
@@ -104,7 +118,11 @@ void ShowLine(int index)
     if (posterHint != null) posterHint.gameObject.SetActive(false);
 
     DialogueLine line = lines[index];
+
+    Sprite telaCheiaSprite = line.imagemTelaCheia != null ? line.imagemTelaCheia : imagemTelaCheiaPadrao;
+    bool telaCheia = line.mostrarTelaCheia && telaCheiaSprite != null;
     bool poster = line.mostrarCartaz && cartaz != null;
+    bool caixa = !poster && (!telaCheia || line.textoSobreImagem);
 
     if (posterImage != null)
     {
@@ -112,9 +130,27 @@ void ShowLine(int index)
         if (poster) posterImage.sprite = cartaz;
     }
 
+    if (fullscreenImage != null)
+    {
+        fullscreenImage.gameObject.SetActive(telaCheia);
+        if (telaCheia)
+        {
+            fullscreenImage.sprite = telaCheiaSprite;
+            fullscreenImage.preserveAspect = !telaCheiaEsticar;
+            RectTransform telaRt = fullscreenImage.rectTransform;
+            telaRt.anchorMin = Vector2.zero;
+            telaRt.anchorMax = Vector2.one;
+            telaRt.pivot = new Vector2(0.5f, 0.5f);
+            telaRt.offsetMin = Vector2.zero;
+            telaRt.offsetMax = Vector2.zero;
+            telaRt.localScale = Vector3.one;
+            fullscreenImage.color = Color.white;
+        }
+    }
+
     if (sceneImage != null)
     {
-        if (poster)
+        if (telaCheia || poster)
         {
             sceneImage.gameObject.SetActive(false);
         }
@@ -131,11 +167,11 @@ void ShowLine(int index)
 
     if (panelImage != null)
     {
-        panelImage.gameObject.SetActive(!poster);
-        if (!poster) ApplyTextBoxSprite(panelImage, line.textBoxSprite != null ? line.textBoxSprite : defaultTextBoxSprite);
+        panelImage.gameObject.SetActive(caixa);
+        if (caixa) ApplyTextBoxSprite(panelImage, line.textBoxSprite != null ? line.textBoxSprite : defaultTextBoxSprite);
     }
 
-    if (speakerText != null && !poster)
+    if (speakerText != null && caixa)
     {
         speakerText.text = string.IsNullOrEmpty(line.speaker) ? "" : line.speaker;
         speakerText.gameObject.SetActive(speakerText.text.Trim().Length > 0);
@@ -144,7 +180,7 @@ void ShowLine(int index)
     if (messageText != null)
     {
         messageText.text = "";
-        if (poster)
+        if (!caixa)
         {
             canAdvance = true;
             if (posterHint != null) posterHint.gameObject.SetActive(true);
@@ -202,6 +238,12 @@ void ShowLine(int index)
         sceneImage.raycastTarget = false;
         sceneImage.preserveAspect = true;
         sceneImage.gameObject.SetActive(false);
+
+        fullscreenImage = CreateImage("FullscreenImage", canvasGO.transform, Vector2.zero, Vector2.one, new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero);
+        fullscreenImage.raycastTarget = false;
+        fullscreenImage.preserveAspect = !telaCheiaEsticar;
+        fullscreenImage.color = Color.white;
+        fullscreenImage.gameObject.SetActive(false);
 
         posterImage = CreateImage("PosterImage", canvasGO.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0, 40), new Vector2(900, 760));
         posterImage.raycastTarget = false;

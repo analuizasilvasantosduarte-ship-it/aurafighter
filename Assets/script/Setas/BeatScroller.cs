@@ -57,4 +57,31 @@ public class BeatScroller : MonoBehaviour
     {
         hasStarted = false;
     }
+
+    /// <summary>Velocidade atual da rolagem (unidades por segundo).</summary>
+    public float CurrentSpeed
+    {
+        get
+        {
+            if (initialized) return scrollSpeed;
+            return unitsPerSecond > 0f ? unitsPerSecond : beatTempo / 60f;
+        }
+    }
+
+    /// <summary>Acelera (ou freia) a rolagem sem recarregar a fase (ex: saraivada final da Fase1).</summary>
+    public void MultiplySpeed(float multiplier)
+    {
+        float m = Mathf.Max(0.1f, multiplier);
+        if (initialized)
+        {
+            scrollSpeed *= m;
+            unitsPerSecond = 0f; // o Inspector passa a refletir a rolagem real
+        }
+        else
+        {
+            // Ainda não deu Start: aplica no BPM para valer quando a rolagem começar.
+            unitsPerSecond = 0f;
+            beatTempo *= m;
+        }
+    }
 }

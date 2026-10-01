@@ -814,9 +814,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04cc3a1ce070b6849b70f216b7a50a39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beatTempo: 126.4
+  beatTempo: 100
   hasStarted: 0
-  unitsPerSecond: 20
+  unitsPerSecond: 0
   conductor: {fileID: 0}
   autoStartOnKey: 1
 --- !u!4 &226396080
@@ -1767,7 +1767,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e3903f052f6e1c84385cd598b244e788, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f7d4d5e7308a51e49b60159e62b63910, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -2626,7 +2626,7 @@ Transform:
   m_GameObject: {fileID: 1075768975}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.66, y: 2.43, z: 0}
+  m_LocalPosition: {x: 7.36, y: 2.05, z: 0}
   m_LocalScale: {x: 0.37527615, y: 0.34675357, z: 0.7261618}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4515,7 +4515,7 @@ GameObject:
   - component: {fileID: 2040251991}
   - component: {fileID: 2040251990}
   m_Layer: 0
-  m_Name: GamesPlusJames - Rhythm Tutorial
+  m_Name: Chicago (Michael Jackson)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4531,7 +4531,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e3903f052f6e1c84385cd598b244e788, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f7d4d5e7308a51e49b60159e62b63910, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

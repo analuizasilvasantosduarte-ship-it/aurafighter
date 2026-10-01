@@ -92,6 +92,22 @@ public class GameManager : MonoBehaviour
     [Tooltip("Espera após a última seta antes de mostrar o resultado.")]
     public float resultDelay = 1f;
 
+    [Header("Rage da Fase 1 (saraivada final)")]
+    [Tooltip("Liga o trecho final cruel. Só dispara nas cenas listadas em Cenas Do Rage.")]
+    public bool rageSaraivada = true;
+    [Tooltip("Cenas onde a saraivada final acontece. VAZIO = só Fase1.")]
+    public string[] cenasDoRage = { "Fase1" };
+    [Tooltip("Acelera quando restam este número de setas.")]
+    public int setasNoRage = 7;
+    [Tooltip("Multiplicador de velocidade das setas no trecho final (3.5 = bem mais rápido).")]
+    public float multiplicadorVelocidadeRage = 3.5f;
+    [Tooltip("Multiplicador de dano do miss/tecla errada no trecho final (2 = dobro).")]
+    public float multiplicadorDanoRage = 2f;
+    [Tooltip("Mostra aviso na tela quando o trecho final começa.")]
+    public bool avisarRage = true;
+    [Tooltip("Texto do aviso quando o trecho final começa.")]
+    public string textoAvisoRage = "ÚLTIMAS SETAS!";
+
     public event System.Action OnNoteHit;
     public event System.Action OnNoteMissed;
 
@@ -104,6 +120,8 @@ public class GameManager : MonoBehaviour
     private bool everSawNotes;
 
     private int lastWrongFrame;
+
+    private bool rageAtivado;
 
     [Header("Pause")]
     public KeyCode pauseKey = KeyCode.Escape;
@@ -141,6 +159,7 @@ public class GameManager : MonoBehaviour
         resultsShown = false;
         defeated = false;
         resultAdvanceReady = false;
+        rageAtivado = false;
 
         if (multiplierThresholds == null || multiplierThresholds.Length == 0)
         {
@@ -148,6 +167,14 @@ public class GameManager : MonoBehaviour
         }
 
         totalNotes = FindObjectsOfType<NoteObject>().Length;
+
+        // Aviso de ajuste: a saraivada final só tem sentido se a fase tiver MAIS setas que o limite.
+        if (CenaTemRage() && totalNotes > 0f && totalNotes <= setasNoRage)
+        {
+            Debug.LogWarning("[Aura Fighter] A saraivada final dispara logo na 1ª seta resolvida " +
+                             "porque a fase tem " + Mathf.RoundToInt(totalNotes) + " setas e o limite é " +
+                             setasNoRage + ". Adicione setas à fase (ou baixe o limite) para o trecho final.");
+        }
 
         Aura.GetOrCreate();
         Vida v = Vida.GetOrCreate();
@@ -216,6 +243,7 @@ public class GameManager : MonoBehaviour
         else
         {
             if (Input.GetKeyDown(muteKey)) musicMgr.ToggleMute();
+            ChecarRageSaraivada();
             bool musicFinished = musicMgr != null ? musicMgr.HasFinished : (theMusic == null || !theMusic.isPlaying);
             // Fallback: fim da música também encerra (caso sobre nota sem trigger, etc).
             if (musicFinished && resultsScreen != null && Time.time - musicStartTime > 1f)
@@ -470,6 +498,65 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
+    /// <summary>Setas já resolvidas (acertadas + perdidas).</summary>
+    float SetasResolvidas => normalHits + goodHits + perfectHits + missedHits;
+
+    /// <summary>Raio de legality: a saraivada final só vale nas cenas configuradas (Fase1).</summary>
+    bool CenaTemRage()
+    {
+        if (!rageSaraivada) return false;
+        string[] lista = cenasDoRage;
+        // Campo novo em cena antiga vem vazio/null: fallback = só Fase1.
+        if (lista == null || lista.Length == 0) lista = new[] { "Fase1" };
+        string cena = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        foreach (string c in lista)
+        {
+            if (c == cena) return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Fase 1 (lore): quando só restam poucas setas, elas caem MUITO mais rápido
+    /// e valem o dobro de dano. É o que garante a derrota obrigatória.
+    /// </summary>
+    void ChecarRageSaraivada()
+    {
+        if (rageAtivado || resultsShown || defeated) return;
+        if (!CenaTemRage()) return;
+        if (totalNotes <= 0f || setasNoRage <= 0) return;
+
+        float resolvidas = SetasResolvidas;
+        if (resolvidas <= 0f) return; // espera resolver pelo menos 1 seta
+
+        float restantes = totalNotes - resolvidas;
+        if (restantes > setasNoRage) return;
+
+        AtivarRageSaraivada(Mathf.RoundToInt(restantes));
+    }
+
+    void AtivarRageSaraivada(int restantes)
+    {
+        rageAtivado = true;
+        BeatScroller bs = theBS != null ? theBS : FindObjectOfType<BeatScroller>();
+        if (bs != null) bs.MultiplySpeed(Mathf.Max(1f, multiplicadorVelocidadeRage));
+        if (avisarRage)
+        {
+            string msg = string.IsNullOrEmpty(textoAvisoRage)
+                ? "ÚLTIMAS " + restantes + " SETAS!"
+                : textoAvisoRage;
+            JudgmentFX.Aviso(msg, DesignTokens.Colors.Danger);
+        }
+    }
+
+    /// <summary>Dano de miss/tecla errada, já com o dobro do trecho final.</summary>
+    void AplicarDanoMiss()
+    {
+        if (Vida.instance == null) return;
+        float mult = rageAtivado ? Mathf.Max(1f, multiplicadorDanoRage) : 1f;
+        Vida.instance.TakeDamage(Mathf.RoundToInt(Vida.instance.damagePerMiss * mult));
+    }
+
     public void NoteMissed()
     {
         if (resultsShown) return;
@@ -482,7 +569,7 @@ public class GameManager : MonoBehaviour
         PlaySfx(missSfx);
         if (OnNoteMissed != null) OnNoteMissed();
 
-        if (Vida.instance != null) Vida.instance.TakeDamage(Vida.instance.damagePerMiss);
+        AplicarDanoMiss();
     }
 
     public void WrongKeyPress()
@@ -493,7 +580,7 @@ public class GameManager : MonoBehaviour
         if (lastWrongFrame == Time.frameCount) return;
         lastWrongFrame = Time.frameCount;
 
-        if (punishWrongKey && Vida.instance != null) Vida.instance.TakeDamage(Vida.instance.damagePerMiss);
+        if (punishWrongKey) AplicarDanoMiss();
         JudgmentFX.ShowMissCenter();
         PlaySfx(missSfx);
         if (OnNoteMissed != null) OnNoteMissed();

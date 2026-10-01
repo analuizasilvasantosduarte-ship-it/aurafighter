@@ -304,79 +304,125 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lines:
-  - speaker: Carlos
+  - speaker: ...
     text: "Tarde de sol, rua vazia, nenhum plano na cabe\xE7a. S\xF3 o sol batendo
       e o t\xEAnis arrastando no asfalto."
     image: {fileID: 1297760246, guid: 268d4f91ad8f53444886dd93b5259d6f, type: 3}
     textBoxSprite: {fileID: 0}
     mostrarCartaz: 0
-  - speaker: Carlos
-    text: Um cartaz me chama. Vou ver o que diz.
+    mostrarTelaCheia: 0
+    imagemTelaCheia: {fileID: 0}
+    textoSobreImagem: 0
+  - speaker: ...
+    text: "At\xE9 que um cartaz chama a aten\xE7\xE3o de Carlos..."
     image: {fileID: 1297760246, guid: 268d4f91ad8f53444886dd93b5259d6f, type: 3}
     textBoxSprite: {fileID: 0}
     mostrarCartaz: 0
+    mostrarTelaCheia: 0
+    imagemTelaCheia: {fileID: 0}
+    textoSobreImagem: 0
   - speaker: 
     text: 
     image: {fileID: 0}
     textBoxSprite: {fileID: 0}
     mostrarCartaz: 1
+    mostrarTelaCheia: 0
+    imagemTelaCheia: {fileID: 0}
+    textoSobreImagem: 0
   - speaker: Carlos
     text: "BATALHA DE AURA no parque. Entrada gratuita e o pr\xEAmio em aura. Sorte
       que eu t\xF4 precisando de uma."
     image: {fileID: 1297760246, guid: 268d4f91ad8f53444886dd93b5259d6f, type: 3}
     textBoxSprite: {fileID: 0}
     mostrarCartaz: 0
+    mostrarTelaCheia: 0
+    imagemTelaCheia: {fileID: 0}
+    textoSobreImagem: 0
   - speaker: Carlos
     text: "Quem vai levar esse trof\xE9u sou eu. O nome mais aurado do Brasil vai
       ser o meu!"
     image: {fileID: 1297760246, guid: 268d4f91ad8f53444886dd93b5259d6f, type: 3}
     textBoxSprite: {fileID: 0}
     mostrarCartaz: 0
+    mostrarTelaCheia: 0
+    imagemTelaCheia: {fileID: 0}
+    textoSobreImagem: 0
+  - speaker: 
+    text: 
+    image: {fileID: 21300000, guid: 5ceca5e5c251e864b8aa2729f27c64b0, type: 3}
+    textBoxSprite: {fileID: 0}
+    mostrarCartaz: 0
+    mostrarTelaCheia: 1
+    imagemTelaCheia: {fileID: 21300000, guid: 5ceca5e5c251e864b8aa2729f27c64b0, type: 3}
+    textoSobreImagem: 0
   - speaker: Red Bird
     text: "Hahaha! Voc\xEAs nunca ser\xE3o o mais aurado do Brasil, Carlos! Esse
       trof\xE9u j\xE1 vem com o meu nome."
     image: {fileID: 21300000, guid: 507e8a024c2b4f54cab1640a1b8be661, type: 3}
     textBoxSprite: {fileID: 0}
     mostrarCartaz: 0
+    mostrarTelaCheia: 0
+    imagemTelaCheia: {fileID: 0}
+    textoSobreImagem: 0
   - speaker: Carlos
     text: "Ah \xE9? Ent\xE3o prova, passarinho. Aura se ganha na arena, n\xE3o no
       papel."
     image: {fileID: 1297760246, guid: 268d4f91ad8f53444886dd93b5259d6f, type: 3}
     textBoxSprite: {fileID: 0}
     mostrarCartaz: 0
+    mostrarTelaCheia: 0
+    imagemTelaCheia: {fileID: 0}
+    textoSobreImagem: 0
   - speaker: Red Bird
     text: Hehe... adoram. Todo mundo chega cheio de vontade e sai carregando o frustrinho.
     image: {fileID: 21300000, guid: 507e8a024c2b4f54cab1640a1b8be661, type: 3}
     textBoxSprite: {fileID: 0}
     mostrarCartaz: 0
+    mostrarTelaCheia: 0
+    imagemTelaCheia: {fileID: 0}
+    textoSobreImagem: 0
   - speaker: Carlos
     text: "Frustrinho \xE9 o que eu deixo em quem duvida de mim. Vou entrar nas \xE1reas,
       passar por tudo que tiver e voltar com a aura l\xE1 no alto."
     image: {fileID: 1297760246, guid: 268d4f91ad8f53444886dd93b5259d6f, type: 3}
     textBoxSprite: {fileID: 0}
     mostrarCartaz: 0
+    mostrarTelaCheia: 0
+    imagemTelaCheia: {fileID: 0}
+    textoSobreImagem: 0
   - speaker: Red Bird
     text: "Boa sorte, novato. Quando voc\xEA estiver suando, eu vou estar comendo
       pipoca l\xE1 de cima."
     image: {fileID: 21300000, guid: 507e8a024c2b4f54cab1640a1b8be661, type: 3}
     textBoxSprite: {fileID: 0}
     mostrarCartaz: 0
+    mostrarTelaCheia: 0
+    imagemTelaCheia: {fileID: 0}
+    textoSobreImagem: 0
   - speaker: Carlos
     text: "Fala tudo agora, passarinho. No fim do dia, o trof\xE9u vai estar bem
       aqui do meu lado."
     image: {fileID: 1297760246, guid: 268d4f91ad8f53444886dd93b5259d6f, type: 3}
     textBoxSprite: {fileID: 0}
     mostrarCartaz: 0
+    mostrarTelaCheia: 0
+    imagemTelaCheia: {fileID: 0}
+    textoSobreImagem: 0
   - speaker: Carlos
     text: "Bora. O parque j\xE1 t\xE1 me chamando."
     image: {fileID: 21300000, guid: 268d4f91ad8f53444886dd93b5259d6f, type: 3}
     textBoxSprite: {fileID: 0}
     mostrarCartaz: 0
+    mostrarTelaCheia: 0
+    imagemTelaCheia: {fileID: 0}
+    textoSobreImagem: 0
   nextSceneName: Fase1
   letterDelay: 0.03
   background: {fileID: 21300000, guid: 42da48dae4b9b7247885f8b33effc442, type: 3}
   cartaz: {fileID: 21300000, guid: a0c0bc60de9d29f4090539e8a554dc4b, type: 3}
   defaultTextBoxSprite: {fileID: 0}
+  imagemTelaCheiaPadrao: {fileID: 0}
+  telaCheiaEsticar: 0
   startOnAwake: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

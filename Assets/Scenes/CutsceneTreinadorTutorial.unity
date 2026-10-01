@@ -305,14 +305,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lines:
   - speaker: Tung Tung Tung Sahur
-    text: "Ol\xE1, Carlos! Eu sou o Tung Tung Tung Sahur, seu treinador. Vou te ensinar
-      as batalhas de ritmo. Vamos come\xE7ar!"
+    text: "Ol\xE1, Carlos! Eu sou o Tung Tung Tung Sahur... Vejo que voc\xEA na\xF5
+      foi muito bem."
+    image: {fileID: 21300000, guid: 6553779ba97405e488fab6c2fdf86f8a, type: 3}
+    textBoxSprite: {fileID: 0}
+    mostrarCartaz: 0
+  - speaker: Tung Tung Tung Sahur
+    text: "Mas isso ir\xE1 mudar. Serei seu treinador!"
     image: {fileID: 21300000, guid: 6553779ba97405e488fab6c2fdf86f8a, type: 3}
     textBoxSprite: {fileID: 0}
     mostrarCartaz: 0
   - speaker: Carlos
-    text: Entendido, mestre! Quando as setas acabarem, estarei pronto para o duelo
-      com o Red Bird.
+    text: Entendido, chefia! Me ensine os seus dons da aura!!!
     image: {fileID: -31093832, guid: 268d4f91ad8f53444886dd93b5259d6f, type: 3}
     textBoxSprite: {fileID: 0}
     mostrarCartaz: 0
